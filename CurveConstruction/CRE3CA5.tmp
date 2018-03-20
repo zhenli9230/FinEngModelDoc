@@ -3,7 +3,7 @@
 
 %------------------------------------------------------------
 %
-\documentclass[reqno]{amsart}
+\documentclass{amsart}
 %
 %----------------------------------------------------------
 % This is a sample document for the AMS LaTeX Article Class
@@ -91,7 +91,7 @@
 %publication elsewhere.}
 %\date{March 15, 2002}
 %\subjclass{Primary 05C38, 15A15; Secondary 05A15, 15A18} %
-%\keywords{Keyword one, keyword two etc.}%
+\keywords{Keyword one, keyword two etc.}%
 %\dedicatory{Dedicated to Professor XY on the occasion of his seventieth birthday.}
 
 \begin{abstract}
@@ -113,258 +113,23 @@ Technical documents recording theory and practices of interest rate curve constr
 
 \section{Discounting Under Collateralization}
 \subsection{Notations}
-\hfill\\
-\\
-\begin{tabular}{|p{3cm}||p{10cm}|} 
+\begin{tabular}{|p{3cm}||p{3cm}|} 
 	\hline
-	%\multicolumn{4}{|c|}{Symbol Definitions} \\
-	$d,f,c$ & Currencies $d, f, c$ \\
-	\hline
-	\(r^{d}, r^{f}, r^{c}\) & Instantaneous risk-free rates for currency $d, f, c$\\
-	\hline
-	\(e^{d}, e^{f}, e^{c}\) & Instantaneous standard collateral rates for currency $d, f, c$\\
-	\hline
-	$e^{d|f}$               & Instantaneous collateral rates for $d$-payment under $f$-collateral. In particular we have $e^{f|f} = e^{f}$\\
-	\hline
-	$D(t,T;x)$              & Discount factor from $t$ to $T$, with (stochastic) rate $x(t)$: $D(t,T;x) = exp( -\int_{t}^{T}x(s)ds )$\\
-	\hline
-	$V^{d}(T), V^{f}(T)$    & The $d$-currency ($f$-currency) payoff at time $T$\\
-	\hline
-	$V^{d|d}(t), V^{d|f}(T)$& The $d$-currency value of the payoff $V^{d}(T)$ at time $t$, under $d$-collateral($f$-collateral)\\
-	\hline
-	$\chi^{fd}(t)$          & Spot FX from currency $f$ to currency $d$\\
-	\hline
-	$X^{fd|d}(t;T)$         & FX Forward at time $t$, to convert currency $f$ to currency $d$ at $T$, 
-														under the assumption that the corresponding FX Swap is collateralized against $d$ currency with standard collateral rate $e^{d}$\\
-	\hline
-	$E_{t}^{d}[\cdot], E_{t}^{f}[\cdot]$ & $t$ - risk neutral expectation for currency $d$ (respectively currency $f$)\\
-	\hline
-	$P(t,T;e^{d|f})$        & $P(t,T;e^{d|f}) = E_{t}^{d}[D(t,T;e^{d|f})]$ \\
-	\hline
-	$\mu^{fd|d}(t)$         & The drift of FX spot $\chi^{fd}(t)$ under $E_{t}^{d}(\cdot)$, i.e. $\mu^{fd|d}(t) = \frac{E_{t}^{d}[\chi^{fd}(t)]}{dt}$\\
-	\hline
+	\multicolumn{4}{|c|}{Symbol Definitions} \\
+	d,f,c & currencies d, f, c \\
+	\(r^{d}, r^{f}, r^{c}\) & instantaneous risk-free rates for currency d, f, c\\
+	
 	
 \end{tabular}
-
-\subsection{Pricing Formula under Collateralization}
-
-\subsubsection{\textbf{Pricing with Effective Collateral Rate}}
-\hfill\\
 \\
-In the following we would assume that the price of a $d$-payoff under $c$-collateral is given by  
-	\begin{equation}
-		 V^{d|c}(t) = E^{d}_{t}[D(t,T;e^{d|c})V(T)]
-	\end{equation}
-where $e^{d|c}$ is the effective collateral rate. In particular under $e^{d|d} = e^{d}$ and we have 
-	\begin{equation}
-		V^{d|d}(t) = E^{d}_{t}[D(t,T;e^{d|d})V(T)] = E^{d}_{t}[D(t,T;e^{d})V(T)]
-	\end{equation}
-We will then show the relationship between different effective collateral rates. 
-	
-\subsubsection{\textbf{FX Forward under Collateralization}}
-\hfill\\
 \\
-Lets consider a FX Swap in which the investor borrows from the counterparty in $f$ currency, while lending in $d$ currency to the same counterparty.
-We assume that the trade is collateralized against $d$ currency with collateral rate $e^{d}(t)$.  
-At the contract inception $t$, investor borrows one unit of $f$ currency and lend out an equivalent amount of $d$ currency, while at the maturity $T$ one unit
-of $f$ currency is exchanged back against a given quantity $X^{fd|d}(t;T)$. Then we have:
-	\begin{equation}
-		V_{FXSwap}^{d|d}(t) = E_{t}^{d}[( \chi^{fd}(T) - X^{fd|d}(t;T) ) D(t,T; e^{d|d})]
-	\end{equation}
-Using the usual assumption that $V_{FXSwap}^{d|d}(t) = 0$ at contract inception, we then get:
-	\begin{equation}\label{eq:FXForwardExpression_fd_d}
-			X^{fd|d}(t,T) = \frac{E^{d}_{t}[ \chi^{fd}(T)D(t,T;e^{d|d}) ]}{E^{d}_{t}[D(t,T;e^{d|d})]}
-	\end{equation}
-Similarly consider a FX Swap in which the investor borrows from the counterparty in $f$ currency, while lending in $d$ currency to the same counterparty, 
-and we assume the trade is collateralized against $c$ currency. Then we have 
-	\begin{equation}
-		V_{FXSwap}^{d|c}(t) = E_{t}^{d}[( \chi^{fd}(T) - X^{fd|c}(t;T) ) D(t,T; e^{d|c})]
-	\end{equation}
-With the usual assumption that $V_{FXSwap}^{d|c}(t) = 0$ at the contract inception, we then get
-	\begin{equation}\label{eq:FXForwardExpression_fd_c}
-		X^{fd|c}(t,T) = \frac{E^{d}_{t}[ \chi^{fd}(T)D(t,T;e^{d|c}) ]}{E^{d}_{t}[D(t,T;e^{d|c})]}
-	\end{equation}
-	
-\subsubsection{\textbf{Collateralized Foreign Measure}}
-\hfill\\
 \\
-Consider a $d$-payoff under $f$-collateralization, then we should have:
-	\begin{equation}
-		V^{d|f}(0) = E_{0}^{d}[V^{d}(T)D(0,T;e^{d|f})]
-	\end{equation}
-On the other hand, remembering the fact that $e^{f|f} = e^{f}$, we should also have:
-	\begin{equation}
-		\frac{V^{d|f}(0)}{\chi^{fd}(0)} = E_{0}^{f}\left[ \frac{V^{d}(T)}{\chi^{fd}(T)}D(0,T;e^{f})\right]
-													          = E_{0}^{f}\left[ \frac{V^{d}(T)}{\chi^{fd}(T)}D(0,T;e^{f|f})\right]
-	\end{equation}
-From these, we can derive the following:
-	\begin{align*} 
-		V^{d|f}(0) 
-		           &= \chi^{fd}(0)E_{0}^{f}\left[ \frac{V^{d}(T)}{\chi^{fd}(T)}D(0,T;e^{f|f})\right]                                           \\
-							 &= \chi^{fd}(0)E_{0}^{d}\left[ \frac{V^{d}(T)}{\chi^{fd}(T)}D(0,T;e^{f|f})\frac{dQ^{f}}{dQ^{d}}\right]                      \\
-							 &= E_{0}^{d}\left[ V^{d}(T)D(0,T;e^{d|f})\frac{\chi^{fd}(0)}{\chi^{fd}(T)}D(0,T;e^{f|f}-e^{d|f})\frac{dQ^{f}}{dQ^{d}}\right]\\
-							 &= E_{0}^{d}\left[V^{d}(T)D(0,T;e^{d|f})\right]                                                                           \\
-	\end{align*}
-Therefore we have
-	\begin{equation}
-		\frac{\chi^{fd}(0)}{\chi^{fd}(T)}D(0,T;e^{f|f}-e^{d|f})\frac{dQ^{f}}{dQ^{d}} = 1
-	\end{equation}
-which then gives the expresson for the Radon-Nikodym derivative
-	\begin{equation}
-		\frac{dQ^{f}}{dQ^{d}} = D(0,T;e^{d|f} - e^{f|f})\frac{\chi^{fd}(T)}{\chi^{fd}(0)} 
-	\end{equation}	
-Note that $\frac{dQ^{f}}{dQ^{d}}$ is a martingale under $Q^{d}$, we should have 
-	\begin{equation}
-		\mu^{fd|d}(t) = e^{d|f}(t) - e^{f|f}(t)
-	\end{equation}
-and hence we have 
-	\begin{equation}
-		\frac{dQ^{f}}{dQ^{d}} = D(0,T;e^{d|f} - e^{f|f})\frac{\chi^{fd}(T)}{\chi^{fd}(0)} = D(0,T;\mu^{fd|d})\frac{\chi^{fd}(T)}{\chi^{fd}(0)} 
-	\end{equation}
-
-
-\subsubsection{\textbf{FX Drift and Collateral Basis}}	
-\hfill\\
-Finally we consider a $f$-payoff under $c$-collateralization. We have 
-	\begin{equation}
-		V^{f|c}(t) = E_{t}^{f}[V(T)D(t,T;e^{f|c})]
-	\end{equation}
-and at the same time also 
-	\begin{equation}
-		V^{f|c}(t)\chi^{fd}(t) = E_{t}^{d}[ \chi^{fd}(T)V(T)D(t,T;e^{d|c}) ]
-	\end{equation}
-Using the formula for $\frac{dQ^{f}}{dQ^{d}}$ we can then derive that 
-	\begin{equation}
-		e^{f|c} = e^{d|c} - \mu^{fd}
-	\end{equation}
-and rearranging to get
-	\begin{equation}
-		\mu^{fd} = e^{d|c} - e^{f|c}
-	\end{equation}
-The above discussion shows the following results:
-	\begin{proposition}
-	  \hfill\\
-		The FX drift $\mu^{fd|d}(t) = \frac{E_{t}^{d}[\chi^{fd}(t)]}{dt} = e^{d|c} - e^{f|c}$ is independent of the collateral currency $c$. 
-	\end{proposition}
-Using the result of the above proposition, we then have:
-	\begin{equation}
-		\mu^{fd|d}(t) = e^{d|c} - e^{f|c} = e^{d|g} - e^{f|g}
-	\end{equation}
-and rearranging we have 
-	\begin{equation}
-		e^{d|c} - e^{d|g} = e^{f|c} - e^{f|g}
-	\end{equation}
-Hence we have the following results:
-	\begin{proposition}
-		We can define the collateral basis as 
-			\begin{equation}
-				s^{c,g} = e^{d|c} - e^{d|g} = e^{f|c} - e^{f|g}
-			\end{equation}
-	which is independent of the payment currency.
-	\end{proposition}
-	
-\subsubsection{\textbf{Collateralized $T$-Forward Measure}}	
-\hfill\\
-Using the effective collateral rate $e^{d|f}$ we can define the collateralized $T$-forward measure:
-	\begin{equation}
-		\frac{dQ^{d|f,T}}{dQ^{d}} = \frac{D(0,T;e^{d|d})P(T,T;e^{d|f})}{P(0,T;e^{d|f})} = \frac{D(0,T;e^{d|d})}{P(0,T;e^{d|f})}
-	\end{equation}
-and the last equality is because we have $P(T,T;e^{d|f}) = 1$. Also we should have
-	\begin{equation}
-		E^{d}_{t}\left[\frac{dQ^{d|f,T}}{dQ^{d}}\right] = \frac{D(0,t;e^{d|d})P(t,T;e^{d|f})}{P(0,T;e^{d|f})}
-	\end{equation}
-With this definition of collateralized $T$-Forward measure, we can have the following general formula:
-	\begin{align*}
-			V^{d|f}(t) &= E^{d}\left[V^{d}(T)D(t,T;e^{d|f})\right] \\
-			           &= E^{d}\left[V^{d}(T)D(t,T;e^{d|f})\frac{dQ^{d|c,T}}{dQ^{d}}\bigg{/}\frac{dQ^{d|c,T}}{dQ^{d}}\right]\\
-								 &= E^{d}_{t}\left[ \frac{dQ^{d|c,T}}{dQ^{d}}\right]E^{d|c,T}_{t}\left[\frac{V^{d}(T)D(t,T;e^{d|f})}{\frac{dQ^{d|c,T}}{dQ^{d}}}\right]\\
-								 &= \frac{D(0,t;e^{d|d})P(t,T;e^{d|c})}{P(0,T;e^{d|c})}E^{d|c,T}_{t}\left[V^{d}(T)D(t,T;e^{d|f})\frac{P(0,T;e^{d|c})}{D(0,T;e^{d|d})}\right]\\
-								 &= P(t,T;e^{d|c})E^{d|c,T}_{t}\left[\frac{V^{d}(T)D(t,T;e^{d|f})}{D(t,T;e^{d|d})}\right]\\
-								 &= P(t,T;e^{d|c})E^{d|c,T}_{t}\left[V^{d}(T)D(t,T;e^{d|f}-e^{d|d})\right]\\
-								 &= P(t,T;e^{d|c})E^{d|c,T}_{t}\left[V^{d}(T)D(t,T;s^{f,d})\right]
-		\end{align*}
-	\begin{proposition}
-	Changing to T-Forward Measure:
-	Consider a general $d$-currency payoff $V^{d}(T)$, then we have:
-		\begin{align}
-		  V^{d|f}(t) &= E^{d}\left[V^{d}(T)D(t,T;e^{d|f})\right] \nonumber\\
-			           &= P(t,T;e^{d|c})E^{d|c,T}_{t}\left[V^{d}(T)D(t,T;e^{d|f}-e^{d|d})\right]\\
-								 &= P(t,T;e^{d|d})E^{d|d,T}_{t}\left[V^{d}(T)D(t,T;e^{d|f}-e^{d|d})\right]
-		\end{align}
-	And in particular we have:
-		\begin{equation}
-			V^{d|d}(t) = E^{d|d,T}_{t}\left[V^{d}(T)\right]
-		\end{equation}
-	\end{proposition}
-	
-Moreover, with this definition of collateralized $T$-Forward measure, we have the following result: 
-	\begin{proposition}
-	
-	We can then express the FX forward from Equation(\ref{eq:FXForwardExpression_fd_d}) and Equation(\ref{eq:FXForwardExpression_fd_c}) as follows:
-		\begin{equation}
-			X^{fd|d}(t,T) = \frac{E^{d}_{t}[ \chi^{fd}(T)D(t,T;e^{d|d}) ]}{E^{d}_{t}[D(t,T;e^{d|d})]} = E^{d|d,T}_{t}\left[\chi^{fd}(T)\right]
-		\end{equation}
-
-		\begin{equation}
-			X^{fd|c}(t,T) = \frac{E^{d}_{t}[ \chi^{fd}(T)D(t,T;e^{d|c}) ]}{E^{d}_{t}[D(t,T;e^{d|c})]} = E^{d|c,T}_{t}\left[\chi^{fd}(T)\right]
-		\end{equation}
-	\end{proposition}
-
-\subsubsection{\textbf{FX Forward Invariance under Collateral}}	
-\hfill\\
-Lets consider the FX Forward $X^{fd|c}(t;T)$ under $c$-collateral, which can be written as
-	\begin{equation}
-		X^{fd|c}(t;T) = \frac{E^{d}_{t}[ \chi^{fd}(T)D(t,T;e^{d|c}) ]}{E^{d}_{t}[D(t,T;e^{d|c})]}
-	\end{equation}
-Using the Radon-Nikodym derivative $\frac{dQ^{d|c,T}}{dQ^{d}}$ we can then derive that
-	\begin{align*}
-		E^{d}_{t}[ \chi^{fd}(T)D(t,T;e^{d|c})] 
-			&= P(t,T;e^{d|d})E^{d|d,T}_{t}\left[ \chi^{fd}(T)D(t,T;s^{c,d})\right]\\
-			&= P(t,T;e^{d|d})\left\{Cov^{d|d,T}_{t}\left[\chi^{fd}(T),D(t,T;s^{c,d})\right] 
-			                          + E^{d|d,T}\left[\chi^{fd}(T)\right]E^{d|d,T}\left[D(t,T;s^{c,d})\right]\right\}
-	\end{align*}
-At the same time we have 
-	\begin{equation}
-		E^{d}_{t}\left[D(t,T;e^{d|c})\right] = P(t,T;e^{d|d})E^{d|d,T}_{t}\left[D(t,T;s^{c,d})\right]
-	\end{equation}
-By using the fact $P(t,T;e^{d|d} = E^{d}_{t}[D(t,T;e^{d|d})]$, we then have 
-	\begin{align*}
-		X^{fd|c}(t;T) &= \frac{E^{d}_{t}[ \chi^{fd}(T)D(t,T;e^{d|c}) ]}{E^{d}_{t}[D(t,T;e^{d|c})]}\\	
-									&= \frac{P(t,T;e^{d|d})\left\{Cov^{d|d,T}_{t}\left[\chi^{fd}(T),D(t,T;s^{c,d})\right] 
-																	+ E^{d|d,T}\left[\chi^{fd}(T)\right]E^{d|d,T}\left[D(t,T;s^{c,d})\right]\right\}}
-													{P(t,T;e^{d|d})E^{d|d,T}_{t}\left[D(t,T;s^{c,d})\right]}\\
-									&= E^{d|d,T}\left[\chi^{fd}(T)\right] + Convexity\\
-									&= X^{fd|d}(t,T) + Convexity
-	\end{align*}
-Where the convexity term is given by:
-	\begin{equation}
-		Convexity = \frac{Cov^{d|d,T}_{t}\left[\chi^{fd}(T),D(t,T;s^{c,d})\right] }{E^{d|d,T}_{t}\left[D(t,T;s^{c,d})\right]}
-	\end{equation}
-These are summarized as follows:
-	\begin{proposition}
-		The FX Forward $X^{fd|c}(t,T)$ under the $c$-collateral can be written as 
-			\begin{equation}
-				X^{fd|c}(t,T) = X^{fd|d}(t,T) + Convexity
-			\end{equation}
-		where the convexity correction is given by:
-			\begin{equation}
-				Convexity = \frac{Cov^{d|d,T}_{t}\left[\chi^{fd}(T),D(t,T;s^{c,d})\right] }{E^{d|d,T}_{t}\left[D(t,T;s^{c,d})\right]}
-			\end{equation}
-		Moreover, if the collateral basis $s^{(c,d)}$ is independent of the FX spot $\chi^{fd}(T)$ then the FX forward is invariant under collaterals.
-		In other words we have
-			\begin{equation}
-				X^{fd|d}(t,T) = X^{fd|d}(t,T)
-			\end{equation}
-		if $s^{(c,d)}$ is independent of the FX spot $\chi^{fd}(T)$.
-	\end{proposition}
-	
-
-
-	
-
-
-
-
+\\
+\\
+\\
+\\
+\\
+\\
 
 
 \noindent Sectioning commands. The first one is the\\
